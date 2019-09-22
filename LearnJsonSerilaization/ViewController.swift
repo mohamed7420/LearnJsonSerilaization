@@ -13,27 +13,38 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-  let jsonFormat = """
-
+        let jsonFormat = """
+    [
     {
     "name" : "Ahmed",
-    "Age"  : "21",
+    "Age"  : "19",
+    "email" : "ahmed@gmail.com"
+    } ,
+    {
+    "name" : "mohamed",
+    "Age"  : "22",
     "email" : "mo7med9878@gmail.com"
-    }
-
+    },
+    {
+    "name" : "yousef",
+    "Age"  : "21",
+    "email" : "yousef@gmail.com"
+    } ,
+    ]
     """.data(using: .utf8)!
         
         
-        if let jsonSerilization = try? JSONSerialization.jsonObject(with: jsonFormat, options: .allowFragments) as? [String:Any]
+        if let jsonSerilization = try? JSONSerialization.jsonObject(with: jsonFormat, options: .allowFragments) as? [[String:Any]]
         {
             
-            if let user = User(dictionary: jsonSerilization)
-            {
+            for i in jsonSerilization{
                 
-                print(user.email)
+               let user = User(dictionary: i )
                 
+                guard let resultUser = user else {return}
+                
+                print(resultUser.email)
             }
-           
             
         }
     }
@@ -66,4 +77,6 @@ struct User {
     
     
 }
+
+
 
